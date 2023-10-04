@@ -6,8 +6,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    const float upperSpeed = 5.0f, downSpeed = -5.0f, zeroSpeed = 0.0f;
-    float speedX, speedY, speedZ;
+    public GameObject camera;
     void Start()
     {
 
@@ -20,35 +19,29 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMove()
     {
-        Transform myTransform = this.transform;
-        // åªç›ÇÃç¿ïWÇ©ÇÁÇÃxyz Ç1Ç∏Ç¬â¡éZÇµÇƒà⁄ìÆ
-        speedX = zeroSpeed;
-        speedY = zeroSpeed;
-        speedZ = zeroSpeed;
         if (Input.GetKey(KeyCode.A))
         {
-            speedX = downSpeed;
+            transform.position -= camera.transform.right * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            speedX = upperSpeed;
+            transform.position += camera.transform.right * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.W))
         {
-            speedZ = upperSpeed;
+            transform.position += camera.transform.forward * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            speedZ = downSpeed;
+            transform.position -= camera.transform.forward * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speedY = downSpeed;
+            transform.position -= camera.transform.up * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            speedY = upperSpeed;
+            transform.position += camera.transform.up * Time.deltaTime;
         }
-        myTransform.Translate(speedX * Time.deltaTime, speedY * Time.deltaTime, speedZ * Time.deltaTime);
     }
 }
