@@ -6,42 +6,55 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject camera;
+    GameObject child;   //  子のオブジェクトを格納用
     void Start()
     {
-
+        child = transform.GetChild(0).gameObject; //  子のオブジェクトを取得
     }
 
     void Update()
     {
+        //  プレイヤーの移動関数
         PlayerMove();
     }
 
     void PlayerMove()
     {
+        //  Aが押されたら
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position -= camera.transform.right * Time.deltaTime;
+            //  子のオブジェクトから見て右に移動
+            transform.position -= child.transform.right * Time.deltaTime;
         }
+        //  Dが押されたら
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += camera.transform.right * Time.deltaTime;
+            //  子のオブジェクトから見て左に移動
+            transform.position += child.transform.right * Time.deltaTime;
         }
+        //  Wが押されたら
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += camera.transform.forward * Time.deltaTime;
+            //  子のオブジェクトから見て奥に移動
+            transform.position += child.transform.forward * Time.deltaTime;
         }
+        //  Sが押されたら
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position -= camera.transform.forward * Time.deltaTime;
+            //  子のオブジェクトから見て手前に移動
+            transform.position -= child.transform.forward * Time.deltaTime;
         }
+        //  左のシフトキーが押されたら
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.position -= camera.transform.up * Time.deltaTime;
+            //  子のオブジェクトから見て下に移動
+            transform.position -= child.transform.up * Time.deltaTime;
         }
+        //  スペースキーが押されたら
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.position += camera.transform.up * Time.deltaTime;
+            //  子のオブジェクトから見て上に移動
+            transform.position += child.transform.up * Time.deltaTime;
         }
     }
 }
