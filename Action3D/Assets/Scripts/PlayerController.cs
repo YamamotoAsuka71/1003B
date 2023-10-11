@@ -56,5 +56,7 @@ public class PlayerController : MonoBehaviour
             //  子のオブジェクトから見て上に移動
             transform.position += child.transform.up * Time.deltaTime;
         }
+
+        
     }
 }
