@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class awata_Camera : MonoBehaviour
