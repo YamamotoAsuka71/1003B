@@ -6,8 +6,14 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] const float SENSITIVE = 1.0f;
     [SerializeField] GameObject Player;
-
-    Rigidbody player_rb;
+    const float MAX_SPEED = 2.5f;
+    const float MIN_SPEED = 1.0f;
+    const float QUICK_TIME = 0.25f;
+    float speed = MIN_SPEED;
+    float quickTimer = 0.0f;
+    bool quickFlag = false;
+    float timer = 0.0f;
+    bool dashFlag = false;
     Transform player;
 
     float InputX;
@@ -15,7 +21,6 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player_rb = Player.GetComponent<Rigidbody>();
         player = Player.transform;
     }
 
@@ -24,6 +29,7 @@ public class CameraController : MonoBehaviour
     {
         Rotation();
         SetMovedirection(gameObject.transform);
+        DashMove();
     }
 
     void Rotation()
@@ -44,19 +50,19 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            moveObject.position += forward * Time.deltaTime;
+            moveObject.position += forward * Time.deltaTime * speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            moveObject.position += back * Time.deltaTime;
+            moveObject.position += back * Time.deltaTime * speed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            moveObject.position += left * Time.deltaTime;
+            moveObject.position += left * Time.deltaTime * speed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            moveObject.position += right * Time.deltaTime;
+            moveObject.position += right * Time.deltaTime * speed;
         }
         if (Input.GetKey(KeyCode.Space))
         {
@@ -65,6 +71,57 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             moveObject.position += down * Time.deltaTime;
+        }
+    }
+    void DashMove()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            quickTimer += Time.deltaTime;
+            if (quickTimer < QUICK_TIME)
+            {
+                if (quickFlag == false)
+                {
+                    quickFlag = true;
+                }
+
+            }
+            else
+            {
+                quickFlag = false;
+                speed = MAX_SPEED;
+            }
+            if (quickFlag == false && Input.GetMouseButton(1))
+            {
+                dashFlag = true;
+            }
+            else if (quickFlag == false && Input.anyKey)
+            {
+                dashFlag = false;
+            }
+        }
+        else
+        {
+            dashFlag = false;
+            speed = MIN_SPEED;
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            quickTimer = 0.0f;
+        }
+        if (quickFlag == true)
+        {
+            transform.position += Player.transform.forward * Time.deltaTime * MAX_SPEED;
+            timer += Time.deltaTime;
+        }
+        if (timer > QUICK_TIME)
+        {
+            quickFlag = false;
+            timer = 0.0f;
+        }
+        if (dashFlag == true)
+        {
+            transform.position += Player.transform.forward * Time.deltaTime * MAX_SPEED;
         }
     }
 }
