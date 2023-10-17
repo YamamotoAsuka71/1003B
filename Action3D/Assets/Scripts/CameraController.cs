@@ -4,39 +4,67 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject player;   //  プレイヤー格納用
-    float mouse_move_x; //  カメラの移動量
+    [SerializeField] const float SENSITIVE = 1.0f;
+    [SerializeField] GameObject Player;
 
+    Rigidbody player_rb;
+    Transform player;
+
+    float InputX;
+
+    // Start is called before the first frame update
     void Start()
     {
-
+        player_rb = Player.GetComponent<Rigidbody>();
+        player = Player.transform;
     }
 
+    // Update is called once per frame
     void Update()
     {
-        //  カメラの操作関数
-        CameraMove();
+        Rotation();
+        SetMovedirection(gameObject.transform);
     }
 
-    void CameraMove()
+    void Rotation()
     {
-        Vector3 mousePosition = Input.mousePosition;    //  マウスカーソルのスクリーン座標を取得
-        //  スクリーン座標のX座標の500より小さい位置にカーソルがあれば
-        if (mousePosition.x < 500)
+        InputX = Input.GetAxis("Mouse X") * SENSITIVE;
+
+        transform.RotateAround(player.position, player.up, InputX);
+    }
+
+    public void SetMovedirection(Transform moveObject)
+    {
+        Vector3 forward = gameObject.transform.forward;
+        Vector3 back = -gameObject.transform.forward;
+        Vector3 right = gameObject.transform.right;
+        Vector3 left = -gameObject.transform.right;
+        Vector3 up = gameObject.transform.up;
+        Vector3 down = -gameObject.transform.up;
+
+        if (Input.GetKey(KeyCode.W))
         {
-            mouse_move_x = -100;    //  カメラの移動量を-100に設定
-            transform.RotateAround(player.transform.position, Vector3.up, mouse_move_x * Time.deltaTime);   //  プレイヤーを軸に左回転回転させる
+            moveObject.position += forward * Time.deltaTime;
         }
-        //  スクリーン座標のX座標の1200より大きい位置にカーソルがあれば
-        else if (mousePosition.x > 1200)
+        if (Input.GetKey(KeyCode.S))
         {
-            mouse_move_x = 100; //  カメラの移動量を100に設定
-            transform.RotateAround(player.transform.position, Vector3.up, mouse_move_x * Time.deltaTime);   //  プレイヤーを軸に右回転させる
+            moveObject.position += back * Time.deltaTime;
         }
-        //  スクリーン座標の真ん中らへんにカーソルがあれば
-        else
+        if (Input.GetKey(KeyCode.A))
         {
-            mouse_move_x = 0;   //  カメラの移動量をリセットする
+            moveObject.position += left * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveObject.position += right * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            moveObject.position += up * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveObject.position += down * Time.deltaTime;
         }
     }
 }
