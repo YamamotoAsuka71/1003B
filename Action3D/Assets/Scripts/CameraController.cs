@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
     {
         InputX = Input.GetAxis("Mouse X") * SENSITIVE;
 
-        transform.RotateAround(player.position, player.up, InputX);
+        transform.RotateAround(player.position, Vector3.up, InputX);
     }
 
     public void SetMovedirection(Transform moveObject)
