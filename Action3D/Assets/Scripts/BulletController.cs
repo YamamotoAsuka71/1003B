@@ -4,34 +4,31 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    [SerializeField] GameObject sphere;
-    [SerializeField] GameObject childObj;
-    private float speed = 300;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        childObj = transform.GetChild(0).gameObject;
-    }
+    [SerializeField] GameObject shellPrefab;
+    private int count;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        count += 1;
+        float Speed = 180.0f;
+        // ÅiÉ|ÉCÉìÉgÅj
+        // ÇUÇOÉtÉåÅ[ÉÄÇ≤Ç∆Ç…ñCíeÇî≠éÀÇ∑ÇÈ
+        if (count % 60 == 0)
         {
-            GameObject ball = (GameObject)Instantiate(sphere, childObj.transform.position, Quaternion.identity);
-            Rigidbody ballRigidbody = ball.GetComponent<Rigidbody>();
-            ballRigidbody.AddForce(transform.forward * speed);
-        }
+            GameObject shell = Instantiate(shellPrefab, transform.position, Quaternion.identity);
+            Rigidbody shellRb = shell.GetComponent<Rigidbody>();
 
-        if (Input.GetKey("right"))
-        {
-            transform.Rotate(0, 2, 0);
-        }
+            // íeë¨ÇÕé©óRÇ…ê›íË
+            shellRb.AddForce(transform.forward * 500);
 
-        if (Input.GetKey("left"))
+            // ÇTïbå„Ç…ñCíeÇîjâÛÇ∑ÇÈ
+            Destroy(shell, 5.0f);
+        }
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            transform.Rotate(0, -2, 0);
+            transform.Rotate(0.0f, -Speed*Time.deltaTime, 0.0f);
         }
     }
 }
