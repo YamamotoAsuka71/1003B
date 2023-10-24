@@ -358,6 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a220542160a4b54c95f466547d2e6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxAngularSpeed: Infinity
+  _smoothTime: 0.3
 --- !u!1001 &5351165289335012307
 PrefabInstance:
   m_ObjectHideFlags: 0
