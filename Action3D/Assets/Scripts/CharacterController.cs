@@ -22,11 +22,57 @@ public class CharacterController : MonoBehaviour
         cameraVec.y = camera.transform.localEulerAngles.y;
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         {
-            transform.localEulerAngles = new Vector3(angleX, cameraVec.y - 45.0f, 0.0f);
+            if (transform.localEulerAngles.y - (cameraVec.y - 45.0f) > 0)
+            {
+                if (transform.localEulerAngles.y > cameraVec.y - 45.0f)
+                {
+                    Debug.Log("左前に反時計回り");
+                    transform.Rotate(0.0f, -1.0f, 0.0f);
+                }
+                else
+                {
+                    Debug.Log("左前");
+                }
+            }
+            if (transform.localEulerAngles.y - (cameraVec.y - 45.0f) < 0)
+            {
+                if (transform.localEulerAngles.y < cameraVec.y - 45.0f)
+                {
+                    Debug.Log("左前に時計回り");
+                    transform.Rotate(0.0f, 1.0f, 0.0f);
+                }
+                else
+                {
+                    Debug.Log("左前");
+                }
+            }
         }
         else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
         {
-            transform.localEulerAngles = new Vector3(angleX, cameraVec.y + 45.0f, 0.0f);
+            if (transform.localEulerAngles.y - (cameraVec.y + 45.0f) > 0)
+            {
+                if (transform.localEulerAngles.y > cameraVec.y + 45.0f)
+                {
+                    Debug.Log("右前に反時計回り");
+                    transform.Rotate(0.0f, -1.0f, 0.0f);
+                }
+                else
+                {
+                    Debug.Log("右前");
+                }
+            }
+            if (transform.localEulerAngles.y - (cameraVec.y + 45.0f) < 0)
+            {
+                if (transform.localEulerAngles.y < cameraVec.y + 45.0f)
+                {
+                    Debug.Log("右前に時計回り");
+                    transform.Rotate(0.0f, 1.0f, 0.0f);
+                }
+                else
+                {
+                    Debug.Log("右前");
+                }
+            }
         }
         else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
         {
