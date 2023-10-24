@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8196240400440302388}
   - component: {fileID: 877963994680651353}
   - component: {fileID: 4767913331125626452}
-  - component: {fileID: 8300678840123990752}
+  - component: {fileID: 7934062460381926138}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -106,7 +106,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8300678840123990752
+--- !u!54 &7934062460381926138
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,7 +128,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
