@@ -23,8 +23,8 @@ public class BulletController : MonoBehaviour
             // ’e‘¬‚Í©—R‚Éİ’è
             shellRb.AddForce(transform.forward * 500);
 
-            // ‚T•bŒã‚É–C’e‚ğ”j‰ó‚·‚é
-            Destroy(shell, 5.0f);
+            // 4•bŒã‚É–C’e‚ğ”j‰ó‚·‚é
+            Destroy(shell, 4.0f);
         }
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
