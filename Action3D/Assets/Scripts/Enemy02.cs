@@ -14,7 +14,7 @@ public class Enemy02 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float Speed = 180.0f;
+        float Speed = 100.0f;
         if (Input.GetKeyDown(KeyCode.A))
         {
             transform.Translate(-Speed * Time.deltaTime, 0.0f, 0.0f);
