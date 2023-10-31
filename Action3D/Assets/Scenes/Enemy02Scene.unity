@@ -319,6 +319,10 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8323176366317935331, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 3078340696129013563, guid: 7b2a1639c7d31284a97b175e4826b179, type: 3}
+    - target: {fileID: 8323176366317935331, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -329,6 +333,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 1277685814386959954, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
+    - {fileID: 8323176366317935331, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -353,7 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e25ebb189bc24a8473f42e68ff33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy02: {fileID: 0}
+  Enemy02: {fileID: 8231191686227230780, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
+  shellPrefab: {fileID: 2587789878231391711, guid: 2a05f77b1b8ee874cbdba5d5069ded6f, type: 3}
   _self: {fileID: 265211171}
   _target: {fileID: 4250933}
   _forward: {x: 0, y: 0, z: 1}
@@ -399,14 +405,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711321847}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 052e25ebb189bc24a8473f42e68ff33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy02: {fileID: 8231191686227230780, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
-  _self: {fileID: 0}
-  _target: {fileID: 0}
+  shellPrefab: {fileID: 2587789878231391711, guid: 2a05f77b1b8ee874cbdba5d5069ded6f, type: 3}
+  _self: {fileID: 3457718804956408819, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
+  _target: {fileID: 3078340696129013563, guid: 7b2a1639c7d31284a97b175e4826b179, type: 3}
   _forward: {x: 0, y: 0, z: 1}
   moveSpeed: 0
   stopDistance: 0
