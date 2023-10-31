@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject camera;
+    [SerializeField] GameObject staminaGauge;
+    StaminaGauge stamina;
     const float MAX_SPEED = 2.5f;
     const float MIN_SPEED = 1.0f;
     const float QUICK_TIME = 0.25f;
@@ -15,9 +17,10 @@ public class PlayerController : MonoBehaviour
     bool quickFlag = false;
     float timer = 0.0f;
     bool dashFlag = false;
+    bool notDash = false;
     void Start()
     {
-        
+        stamina=staminaGauge.GetComponent<StaminaGauge>();
     }
 
     void Update()
@@ -82,7 +85,15 @@ public class PlayerController : MonoBehaviour
             else
             {
                 quickFlag = false;
-                speed = MAX_SPEED;
+                notDash = stamina.GetNotDecrease();
+                if(notDash==false)
+                {
+                    speed = MAX_SPEED;
+                }
+                else
+                {
+                    speed = MIN_SPEED;
+                }
             }
             if (quickFlag == false && Input.GetMouseButton(1))
             {
@@ -104,7 +115,15 @@ public class PlayerController : MonoBehaviour
         }
         if (quickFlag == true)
         {
-            transform.position += transform.forward * Time.deltaTime * MAX_SPEED;
+            notDash = stamina.GetNotDecrease();
+            if (notDash == false)
+            {
+                transform.position += transform.forward * Time.deltaTime * MAX_SPEED;
+            }
+            else
+            {
+                transform.position += transform.forward * Time.deltaTime * MIN_SPEED;
+            }
             timer += Time.deltaTime;
         }
         if (timer > QUICK_TIME)
@@ -114,7 +133,15 @@ public class PlayerController : MonoBehaviour
         }
         if (dashFlag == true)
         {
-            transform.position += transform.forward * Time.deltaTime * MAX_SPEED;
+            notDash = stamina.GetNotDecrease();
+            if (notDash == false)
+            {
+                transform.position += transform.forward * Time.deltaTime * MAX_SPEED;
+            }
+            else
+            {
+                transform.position += transform.forward * Time.deltaTime * MIN_SPEED;
+            }
         }
     }
 }

@@ -6,6 +6,8 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] const float SENSITIVE = 1.0f;
     [SerializeField] GameObject Player;
+    [SerializeField] GameObject staminaGauge;
+    StaminaGauge stamina;
     const float MAX_SPEED = 2.5f;
     const float MIN_SPEED = 1.0f;
     const float QUICK_TIME = 0.25f;
@@ -14,6 +16,7 @@ public class CameraController : MonoBehaviour
     bool quickFlag = false;
     float timer = 0.0f;
     bool dashFlag = false;
+    bool notDash = false;
     Transform player;
 
     float InputX;
@@ -21,6 +24,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stamina = staminaGauge.GetComponent<StaminaGauge>();
         player = Player.transform;
     }
 
@@ -89,7 +93,15 @@ public class CameraController : MonoBehaviour
             else
             {
                 quickFlag = false;
-                speed = MAX_SPEED;
+                notDash = stamina.GetNotDecrease();
+                if (notDash == false)
+                {
+                    speed = MAX_SPEED;
+                }
+                else
+                {
+                    speed = MIN_SPEED;
+                }
             }
             if (quickFlag == false && Input.GetMouseButton(1))
             {
@@ -111,7 +123,15 @@ public class CameraController : MonoBehaviour
         }
         if (quickFlag == true)
         {
-            transform.position += Player.transform.forward * Time.deltaTime * MAX_SPEED;
+            notDash = stamina.GetNotDecrease();
+            if (notDash == false)
+            {
+                transform.position += player.transform.forward * Time.deltaTime * MAX_SPEED;
+            }
+            else
+            {
+                transform.position += player.transform.forward * Time.deltaTime * MIN_SPEED;
+            }
             timer += Time.deltaTime;
         }
         if (timer > QUICK_TIME)
@@ -121,7 +141,15 @@ public class CameraController : MonoBehaviour
         }
         if (dashFlag == true)
         {
-            transform.position += Player.transform.forward * Time.deltaTime * MAX_SPEED;
+            notDash = stamina.GetNotDecrease();
+            if (notDash == false)
+            {
+                transform.position += player.transform.forward * Time.deltaTime * MAX_SPEED;
+            }
+            else
+            {
+                transform.position += player.transform.forward * Time.deltaTime * MIN_SPEED;
+            }
         }
     }
 }
