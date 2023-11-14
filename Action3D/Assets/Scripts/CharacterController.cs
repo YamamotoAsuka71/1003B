@@ -40,6 +40,15 @@ public class CharacterController : MonoBehaviour
         if (delta == Vector3.zero)
             return;
 
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Space))
+        {
+            Vector3 localAngle = transform.localEulerAngles;
+            localAngle.x = 0.0f;
+            localAngle.z = 0.0f;
+
+            transform.localEulerAngles = localAngle;
+        }
+
         // 進行方向（移動量ベクトル）に向くようなクォータニオンを取得
         var targetRot = Quaternion.LookRotation(delta, Vector3.up);
 

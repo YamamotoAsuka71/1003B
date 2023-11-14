@@ -5,21 +5,19 @@ using UnityEngine.UI;
 
 public class StaminaGauge : MonoBehaviour
 {
-    const float QUICK_TIME = 0.25f;
-    const float RECOVERY_TIME = 1.0f;
-    float quickTimer = 0.0f;
-    bool quickFlag = false;
-    bool quickCheck = false;
-    float timer = 0.0f;
-    float staminaTimer = 0.0f;
-    bool dashFlag = false;
-    float recoveryTimer = 0.0f;
+    const float QUICK_TIME = 0.25f; //  クイックダッシュの判定時間
+    const float RECOVERY_TIME = 1.0f;   //  スタミナ回復開始時間
+    float quickTimer = 0.0f;    //  ダッシュ時間計測用
+    bool quickFlag = false;     //  クイックダッシュからダッシュへの切り替えフラグ
+    float timer = 0.0f; //  ダッシュボタン即離しの状態でクイックダッシュの時間を判定するタイマー
+    bool dashFlag = false;  //  ダッシュ判定用フラグ
+    float recoveryTimer = 0.0f; //  スタミナ回復開始時間計測用
     //最大HPと現在のHP。
-    int maxStamina = 10000;
-    int stamina;
+    int maxStamina = 10000; //  スタミナゲージの最大値
+    int currentStamina;    //  現在のスタミナ
     //Slider
     Slider slider;
-    private bool notDecrease = false;
+    private bool notDecrease = false;   //  スタミナが減少しているかを判別するフラグ
     public bool GetNotDecrease()
     {
         return notDecrease;
@@ -34,8 +32,8 @@ public class StaminaGauge : MonoBehaviour
         slider = gameObject.GetComponent<Slider>();
         //Sliderを最大にする。
         slider.value = 1;
-        //HPを最大HPと同じ値に。
-        stamina = maxStamina;
+        //スタミナを最大のスタミナと同じ値に。
+        currentStamina = maxStamina;
     }
 
     private void Update()
@@ -44,6 +42,7 @@ public class StaminaGauge : MonoBehaviour
     }
     void DashMove()
     {
+        //  ダッシュボタンを押している間はスタミナを減少させ、スタミナが減らなくなってしまったら最低値を維持させる
         if (Input.GetMouseButton(1))
         {
             if (notDecrease == false)
@@ -62,8 +61,8 @@ public class StaminaGauge : MonoBehaviour
             else
             {
                 quickFlag = false;
-                stamina = stamina - 5;
-                slider.value = (float)stamina / (float)maxStamina;
+                currentStamina = currentStamina - 5;
+                slider.value = (float)currentStamina / (float)maxStamina;
             }
             if (quickFlag == false && Input.GetMouseButton(1))
             {
@@ -82,8 +81,8 @@ public class StaminaGauge : MonoBehaviour
             {
                 if (recoveryTimer > RECOVERY_TIME)
                 {
-                    stamina = stamina + 10;
-                    slider.value = (float)stamina / (float)maxStamina;
+                    currentStamina = currentStamina + 10;
+                    slider.value = (float)currentStamina / (float)maxStamina;
                 }
             }
             if (slider.value >= 1.0f)
@@ -99,14 +98,14 @@ public class StaminaGauge : MonoBehaviour
             recoveryTimer += Time.deltaTime;
             if (recoveryTimer > RECOVERY_TIME && notDecrease == false)
             {
-                if (stamina < maxStamina)
+                if (currentStamina < maxStamina)
                 {
-                    stamina = stamina + 10;
-                    slider.value = (float)stamina / (float)maxStamina;
+                    currentStamina = currentStamina + 10;
+                    slider.value = (float)currentStamina / (float)maxStamina;
                 }
-                if (stamina >= maxStamina)
+                if (currentStamina >= maxStamina)
                 {
-                    stamina = maxStamina;
+                    currentStamina = maxStamina;
                 }
             }
         }
@@ -116,8 +115,8 @@ public class StaminaGauge : MonoBehaviour
         }
         if (quickFlag == true)
         {
-            stamina = stamina - 10;
-            slider.value = (float)stamina / (float)maxStamina;
+            currentStamina = currentStamina - 10;
+            slider.value = (float)currentStamina / (float)maxStamina;
             timer += Time.deltaTime;
         }
         if (timer > QUICK_TIME)
@@ -127,8 +126,8 @@ public class StaminaGauge : MonoBehaviour
         }
         if (dashFlag == true)
         {
-            stamina = stamina - 1;
-            slider.value = (float)stamina / (float)maxStamina;
+            currentStamina = currentStamina - 1;
+            slider.value = (float)currentStamina / (float)maxStamina;
         }
     }
 }
