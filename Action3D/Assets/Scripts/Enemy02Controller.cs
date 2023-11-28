@@ -45,7 +45,7 @@ public class Enemy02Controller : MonoBehaviour
         // さらに変数 distance が変数 stopDistance の値よりも大きい場合
         if (distance < moveDistance && distance > stopDistance)
         {
-            GetComponent<Animator>().SetFloat("Speed", 1.0f);
+            //GetComponent<Animator>().SetFloat("Speed", 1.0f);
             // 変数 moveSpeed を乗算した速度でオブジェクトを前方向に移動する
             transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
             // ターゲットへの向きベクトル計算

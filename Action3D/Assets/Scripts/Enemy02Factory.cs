@@ -22,7 +22,7 @@ public class Enemy02Factory : MonoBehaviour
             // プレハブの位置をランダムで設定
             float x = Random.Range(-10.0f, 10.0f);
             float z = Random.Range(-10.0f, 10.0f);
-            Vector3 pos = new Vector3(x, 5.0f, z);
+            Vector3 pos = new Vector3(x, 0.0f, z);
  
             // プレハブを生成
             Instantiate(Prefabs, pos, Quaternion.identity);
