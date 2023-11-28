@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 
 public class Enemy02Controller : MonoBehaviour
@@ -22,7 +23,7 @@ public class Enemy02Controller : MonoBehaviour
     // オブジェクトがターゲットに向かって移動を開始する距離を格納する変数
     public float moveDistance;
     private int count;
-
+    float speed = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +45,7 @@ public class Enemy02Controller : MonoBehaviour
         // さらに変数 distance が変数 stopDistance の値よりも大きい場合
         if (distance < moveDistance && distance > stopDistance)
         {
-
+            GetComponent<Animator>().SetFloat("Speed", 1.0f);
             // 変数 moveSpeed を乗算した速度でオブジェクトを前方向に移動する
             transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
             // ターゲットへの向きベクトル計算
@@ -70,9 +71,10 @@ public class Enemy02Controller : MonoBehaviour
 
                 // 4秒後に砲弾を破壊する
                 Destroy(shell, 4.0f);
-
             }
+
         }
+        
     }
     //private void CreateEnemy()
     //{
