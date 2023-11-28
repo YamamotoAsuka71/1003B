@@ -5,8 +5,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text;
     bool isCount = true;
-    float game_timer = 0.0f;
-    int current_score = 0;
+    float gameTimer = 0.0f;
+    int currentScore = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -24,14 +24,14 @@ public class GameManager : MonoBehaviour
     void UpdateUI()
     {
         //経過時間をテキスト表示
-        text.text = "Time:" + game_timer.ToString("f2") + "\t" + "Score" + current_score;
+        text.text = "Time:" + gameTimer.ToString("f2") + "\t" + "Score" + currentScore;
     }
 
     void CountingTime()
     {
         if(isCount)
         {
-            game_timer += Time.deltaTime;
+            gameTimer += Time.deltaTime;
         }
     }
 
@@ -50,12 +50,12 @@ public class GameManager : MonoBehaviour
     //スコアの加算
     public void AddScore(int score)
     {
-        current_score += score;
+        currentScore += score;
     }
 
     //スコアの減算
     public void SubScore(int score)
     {
-        current_score -= score;
+        currentScore -= score;
     }
 }
