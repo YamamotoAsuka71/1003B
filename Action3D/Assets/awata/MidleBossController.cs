@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class MidleBossController : MonoBehaviour
 {
-    const float FLY_SPEED = 2.0f;
+    [SerializeField] 
+    GameObject Player;
 
+
+    const float FLY_SPEED = 2.0f;
     Animator animator;
+
+    int Hp = 500;
+    int stg = 40;
 
     float speed = 0;
     bool is_attack = false;
@@ -26,16 +32,15 @@ public class MidleBossController : MonoBehaviour
 
     void Movement()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            speed += 1.0f * (Time.deltaTime);
-        }
-        else
-        {
-            speed -= 1.0f* (Time.deltaTime);
-        }
+        Vector3 direction = Player.transform.position - transform.position;
 
-        speed = Mathf.Clamp(speed, 0, 1);
+        Vector3 normal_dir = direction.normalized;
+
+        transform.LookAt(Player.transform.position);
+
+        transform.Translate(transform.forward * FLY_SPEED * Time.deltaTime);
+
+        
 
         animator.SetFloat("Speed", speed);
     }
