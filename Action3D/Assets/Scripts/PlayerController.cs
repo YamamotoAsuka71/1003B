@@ -6,12 +6,14 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] GameObject character;
     [SerializeField] GameObject camera;
     [SerializeField] GameObject staminaGauge;
+    Animator animator = null;
     StaminaGauge stamina;
     const float MAX_SPEED = 2.5f;
     const float MIN_SPEED = 1.0f;
-    const float QUICK_TIME = 0.25f;
+    const float QUICK_TIME = 1.0f;
     float speed = MIN_SPEED;
     float quickTimer = 0.0f;
     bool quickFlag = false;
@@ -20,14 +22,29 @@ public class PlayerController : MonoBehaviour
     bool notDash = false;
     void Start()
     {
+        animator = character.GetComponent<Animator>();
         stamina=staminaGauge.GetComponent<StaminaGauge>();
     }
 
     void Update()
     {
+        if (speed >= MAX_SPEED)
+        {
+            animator.SetBool("isRun", true);
+            animator.SetBool("isWalk", false);
+            animator.SetBool("isIdle", false);
+
+        }
+        if (speed <= MIN_SPEED)
+        {
+            animator.SetBool("isRun", false);
+            animator.SetBool("isWalk", true);
+            animator.SetBool("isIdle", false);
+        }
         //  ƒvƒŒƒCƒ„[‚ÌˆÚ“®ŠÖ”
         PlayerMove();
         DashMove();
+
     }
 
     void PlayerMove()
@@ -78,6 +95,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (quickFlag == false)
                 {
+                    animator.SetTrigger("isDash");
                     quickFlag = true;
                 }
 
@@ -108,6 +126,12 @@ public class PlayerController : MonoBehaviour
         {
             dashFlag = false;
             speed = MIN_SPEED;
+            if (Input.GetKey(KeyCode.A) != true && Input.GetKey(KeyCode.D) != true && Input.GetKey(KeyCode.W) != true && Input.GetKey(KeyCode.S) != true)
+            {
+                animator.SetBool("isIdle", true);
+                animator.SetBool("isRun", false);
+                animator.SetBool("isWalk", false);
+            }
         }
         if (Input.GetMouseButtonDown(1))
         {
