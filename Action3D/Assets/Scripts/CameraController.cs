@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     StaminaGauge stamina;
     const float MAX_SPEED = 2.5f;
     const float MIN_SPEED = 1.0f;
-    const float QUICK_TIME = 0.25f;
+    const float QUICK_TIME = 1.0f;
     float speed = MIN_SPEED;
     float quickTimer = 0.0f;
     bool quickFlag = false;
