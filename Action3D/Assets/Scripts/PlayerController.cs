@@ -8,21 +8,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject camera;
     [SerializeField] GameObject character;
     [SerializeField] GameObject collision;
+    [SerializeField] float minSpeed = 1.0f;
+    float maxSpeed;
     StaminaGauge stamina;
-    CameraController controller;
     Animator animator = null;
     int moveCount = 0;
     float speed = 0.0f;
     const float NOT_SPEED = 0.0f;
-    const float MIN_SPEED = 1.0f;
-    const float MAX_SPEED = 2.5f;
     bool isMove = false;
     bool isAttack = false;
 
     void Start()
     {
+        maxSpeed = minSpeed * 2.0f;
         stamina=gauge.GetComponent<StaminaGauge>();
-        controller=camera.GetComponent<CameraController>();
         animator = character.GetComponent<Animator>();
     }
     void Update()
@@ -33,15 +32,15 @@ public class PlayerController : MonoBehaviour
             switch (moveCount)
             {
                 case 0:
-                    speed = MIN_SPEED;
+                    speed = minSpeed;
                     animator.SetInteger("Moving", 1);
                     break;
                 case 1:
-                    speed = MAX_SPEED;
+                    speed = maxSpeed;
                     animator.SetInteger("Moving", 2);
                     break;
                 case 2:
-                    speed = MAX_SPEED;
+                    speed = maxSpeed;
                     animator.SetInteger("Moving", 3);
                     break;
             }
