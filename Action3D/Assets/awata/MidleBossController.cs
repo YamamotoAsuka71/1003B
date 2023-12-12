@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class MidleBossController : MonoBehaviour
     void Update()
     {
         Movement();
+        DebugMove();
     }
 
     void Movement()
@@ -72,5 +74,44 @@ public class MidleBossController : MonoBehaviour
     {
         material.color = Color.yellow;
         //animator.SetTrigger("isAttack");
+    }
+
+    void DebugMove()
+    {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.Translate(transform.up);
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            transform.Translate(-transform.up);
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.Translate(-transform.right);
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Translate(transform.right);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Rigidbody rigidbody = other.GetComponent<Rigidbody>();
+
+            if (rigidbody != null)
+            {
+                rigidbody.AddForce(transform.forward * 10);
+            }
+            else
+            {
+                Debug.Log("a");
+            }
+
+            //other.GetComponent<Rigidbody>().AddForce(transform.forward * 2.0f); ;
+        }
     }
 }
