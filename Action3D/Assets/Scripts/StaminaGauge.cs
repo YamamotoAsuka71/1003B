@@ -5,27 +5,28 @@ using UnityEngine.UI;
 
 public class StaminaGauge : MonoBehaviour
 {
-    const float QUICK_TIME = 0.25f; //  クイックダッシュの判定時間
-    const float RECOVERY_TIME = 1.0f;   //  スタミナ回復開始時間
-    float quickTimer = 0.0f;    //  ダッシュ時間計測用
-    bool quickFlag = false;     //  クイックダッシュからダッシュへの切り替えフラグ
-    float timer = 0.0f; //  ダッシュボタン即離しの状態でクイックダッシュの時間を判定するタイマー
-    bool dashFlag = false;  //  ダッシュ判定用フラグ
-    float recoveryTimer = 0.0f; //  スタミナ回復開始時間計測用
+    bool isDash = false;
+    bool isRecovery = false;
+    private bool isAttack = false;
+    public bool GetIsAttack()
+    {
+        return isAttack;
+    }
+
+    float dashTimer = 0.0f;
+    float attackTimer = 0.0f;
+    const float ATTACK_TIME = 1.12f; 
+    private int moveCount = 0;
+
+    public int GetMoveCount()
+    {
+        return moveCount;
+    }
     //最大HPと現在のHP。
     int maxStamina = 10000; //  スタミナゲージの最大値
     int currentStamina;    //  現在のスタミナ
     //Slider
     Slider slider;
-    private bool notDecrease = false;   //  スタミナが減少しているかを判別するフラグ
-    public bool GetNotDecrease()
-    {
-        return notDecrease;
-    }
-    public void SetNotDecrease(bool Not)
-    {
-        notDecrease = Not;
-    }
 
     void Start()
     {
@@ -42,92 +43,88 @@ public class StaminaGauge : MonoBehaviour
     }
     void DashMove()
     {
-        //  ダッシュボタンを押している間はスタミナを減少させ、スタミナが減らなくなってしまったら最低値を維持させる
-        if (Input.GetMouseButton(1))
+        if(Input.GetMouseButtonDown(0))
         {
-            if (notDecrease == false)
+            isDash = false;
+            isAttack = true;
+            moveCount = 3;
+        }
+        if (isAttack == false)
+        {
+            if (Input.GetMouseButtonDown(1))
             {
-                recoveryTimer = 0.0f;
+                isDash = true;
             }
-            quickTimer += Time.deltaTime;
-            if (quickTimer < QUICK_TIME)
+            if (Input.GetMouseButtonUp(1))
             {
-                if (quickFlag == false)
+                if (moveCount == 2)
                 {
-                    quickFlag = true;
+                    isDash = false;
+                    dashTimer = 0.0f;
                 }
-
+            }
+            if (Input.GetMouseButton(1) != true)
+            {
+                if (dashTimer >= 1.0f)
+                {
+                    isDash = false;
+                    moveCount = 0;
+                    dashTimer = 0.0f;
+                }
             }
             else
             {
-                quickFlag = false;
-                currentStamina = currentStamina - 5;
+                isRecovery = false;
+            }
+            if (isDash)
+            {
+                dashTimer += Time.deltaTime;
+                currentStamina -= 15;
                 slider.value = (float)currentStamina / (float)maxStamina;
             }
-            if (quickFlag == false && Input.GetMouseButton(1))
+            if (dashTimer < 1.0f)
             {
-                dashFlag = true;
+                moveCount = 1;
             }
-            else if (quickFlag == false && Input.anyKey)
+            else if (dashTimer >= 1.0f)
             {
-                dashFlag = false;
+                moveCount = 2;
             }
-            if (slider.value <= 0.0f)
+            if (isRecovery)
             {
-                recoveryTimer += Time.deltaTime;
-                notDecrease = true;
+                currentStamina += 10;
+                slider.value = (float)currentStamina / (float)maxStamina;
             }
-            if (notDecrease == true)
+            if (dashTimer <= 0.0f)
             {
-                if (recoveryTimer > RECOVERY_TIME)
-                {
-                    currentStamina = currentStamina + 10;
-                    slider.value = (float)currentStamina / (float)maxStamina;
-                }
+                moveCount = 0;
+                isRecovery = true;
             }
-            if (slider.value >= 1.0f)
+            if (slider.value <= 0.1f)
             {
-                notDecrease = false;
-                recoveryTimer = 0.0f;
+                moveCount = 0;
             }
-        }
-        else
-        {
-            notDecrease = false;
-            dashFlag = false;
-            recoveryTimer += Time.deltaTime;
-            if (recoveryTimer > RECOVERY_TIME && notDecrease == false)
+            if (currentStamina <= 0)
             {
-                if (currentStamina < maxStamina)
-                {
-                    currentStamina = currentStamina + 10;
-                    slider.value = (float)currentStamina / (float)maxStamina;
-                }
-                if (currentStamina >= maxStamina)
-                {
-                    currentStamina = maxStamina;
-                }
+                currentStamina = 0;
+            }
+            if (currentStamina > maxStamina)
+            {
+                currentStamina = maxStamina;
             }
         }
-        if (Input.GetMouseButtonDown(1))
+        if (isAttack)
         {
-            quickTimer = 0.0f;
+            attackTimer += Time.deltaTime;
         }
-        if (quickFlag == true)
+        if (attackTimer > ATTACK_TIME)
         {
-            currentStamina = currentStamina - 10;
-            slider.value = (float)currentStamina / (float)maxStamina;
-            timer += Time.deltaTime;
+            isAttack = false;
+            moveCount = 0;
         }
-        if (timer > QUICK_TIME)
+        if (isAttack == false)
         {
-            quickFlag = false;
-            timer = 0.0f;
-        }
-        if (dashFlag == true)
-        {
-            currentStamina = currentStamina - 1;
-            slider.value = (float)currentStamina / (float)maxStamina;
+            attackTimer = 0.0f;
         }
     }
 }
