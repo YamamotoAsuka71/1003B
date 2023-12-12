@@ -538,7 +538,6 @@ MonoBehaviour:
   attackRange: 5
   moveSpeed: 2
   bulletPrefab: {fileID: 0}
-  sound: {fileID: 0}
 --- !u!1 &559238620 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8231191686227230780, guid: 9c7995b0b5d40ee4e895aa4aa3c6fe75, type: 3}
@@ -558,10 +557,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4250933}
   detectionRange: 10
-  attackRange: 5
-  moveSpeed: 2
+  attackRange: 3
+  moveSpeed: 5
   bulletPrefab: {fileID: 2587789878231391711, guid: 2a05f77b1b8ee874cbdba5d5069ded6f, type: 3}
-  sound: {fileID: 0}
 --- !u!1 &711321847
 GameObject:
   m_ObjectHideFlags: 0
