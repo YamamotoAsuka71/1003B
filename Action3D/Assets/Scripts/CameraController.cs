@@ -8,9 +8,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] GameObject Player;
     [SerializeField] GameObject staminaGauge;
     StaminaGauge stamina;
+    PlayerController playerController;
     int moveCount;
-    const float MAX_SPEED = 2.5f;
-    const float MIN_SPEED = 1.0f;
+    float maxSpeed;
+    float minSpeed;
     const float NOT_SPEED = 0.0f;
     float speed = 0.0f;
     bool isMove = false;
@@ -24,6 +25,9 @@ public class CameraController : MonoBehaviour
     {
         stamina = staminaGauge.GetComponent<StaminaGauge>();
         player = Player.transform;
+        playerController=player.GetComponent<PlayerController>();
+        minSpeed = playerController.GetMinSpeed();
+        maxSpeed = minSpeed * 2.0f;
     }
 
     // Update is called once per frame
@@ -35,13 +39,13 @@ public class CameraController : MonoBehaviour
             switch (moveCount)
             {
                 case 0:
-                    speed = MIN_SPEED;
+                    speed = minSpeed;
                     break;
                 case 1:
-                    speed = MAX_SPEED;
+                    speed = maxSpeed;
                     break;
                 case 2:
-                    speed = MAX_SPEED;
+                    speed = maxSpeed;
                     break;
             }
         }
