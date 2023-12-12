@@ -8,7 +8,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject camera;
     [SerializeField] GameObject character;
     [SerializeField] GameObject collision;
-    [SerializeField] float minSpeed = 1.0f;
+    [SerializeField] private float minSpeed = 1.0f;
+    public float GetMinSpeed()
+    {
+        return minSpeed;
+    }
     float maxSpeed;
     StaminaGauge stamina;
     Animator animator = null;
