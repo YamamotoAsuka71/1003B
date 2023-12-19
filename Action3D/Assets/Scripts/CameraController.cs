@@ -4,113 +4,48 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] const float SENSITIVE = 1.0f;
-    [SerializeField] GameObject Player;
-    [SerializeField] GameObject staminaGauge;
-    StaminaGauge stamina;
-    PlayerController playerController;
-    int moveCount;
-    float maxSpeed;
-    float minSpeed;
-    const float NOT_SPEED = 0.0f;
-    float speed = 0.0f;
-    bool isMove = false;
-    bool isAttack = false;
-    Transform player;
+    [SerializeField] GameObject targetObj;
+    Vector3 targetPos;
 
-    float InputX;
+    float height = 1.0f;
 
-    // Start is called before the first frame update
     void Start()
     {
-        stamina = staminaGauge.GetComponent<StaminaGauge>();
-        player = Player.transform;
-        playerController=player.GetComponent<PlayerController>();
-        minSpeed = playerController.GetMinSpeed();
-        maxSpeed = minSpeed * 2.0f;
+        targetPos = targetObj.transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        moveCount = stamina.GetMoveCount();
-        if (isMove)
+        // targetの移動量分、自分（カメラ）も移動する
+        transform.position += targetObj.transform.position - targetPos;
+        targetPos = targetObj.transform.position;
+
+        // マウスの移動量
+        float mouseInputX = Input.GetAxis("Mouse X");
+        float mouseInputY = Input.GetAxis("Mouse Y");
+
+        // X方向に一定量移動していれば横回転
+        //0.0000001fは滑らかさ
+        if (Mathf.Abs(mouseInputX) > 0.0000001f)
         {
-            switch (moveCount)
-            {
-                case 0:
-                    speed = minSpeed;
-                    break;
-                case 1:
-                    speed = maxSpeed;
-                    break;
-                case 2:
-                    speed = maxSpeed;
-                    break;
-            }
+            mouseInputX = mouseInputX * 5;
+
+            // 回転軸はワールド座標のY軸
+            transform.RotateAround(targetObj.transform.position, Vector3.up, mouseInputX);
+
         }
-        else
+
+        // Y方向に一定量移動していれば縦回転
+        if (Mathf.Abs(mouseInputY) > 0.0000001f)
         {
-            speed = NOT_SPEED;
+            //高さの制限
+            if ((height - mouseInputY) < -2 || (height - mouseInputY) > 4)
+            {
+                mouseInputY = 0;
+            }
+            height -= mouseInputY / 10;
         }
-        Rotation();
-        SetMovedirection(gameObject.transform);
-    }
-
-    void Rotation()
-    {
-        InputX = Input.GetAxis("Mouse X") * SENSITIVE;
-
-        transform.RotateAround(player.position, Vector3.up, InputX);
-    }
-
-    public void SetMovedirection(Transform moveObject)
-    {
-        isAttack = stamina.GetIsAttack();
-        Vector3 forward = gameObject.transform.forward;
-        Vector3 back = -gameObject.transform.forward;
-        Vector3 right = gameObject.transform.right;
-        Vector3 left = -gameObject.transform.right;
-        Vector3 up = gameObject.transform.up;
-        Vector3 down = -gameObject.transform.up;
-        if (isAttack == false)
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                moveObject.position += forward * Time.deltaTime * speed;
-                isMove = true;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                moveObject.position += back * Time.deltaTime * speed;
-                isMove = true;
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                moveObject.position += left * Time.deltaTime * speed;
-                isMove = true;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                moveObject.position += right * Time.deltaTime * speed;
-                isMove = true;
-            }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                moveObject.position += up * Time.deltaTime;
-            }
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                moveObject.position += down * Time.deltaTime;
-            }
-            if (Input.GetMouseButton(1))
-            {
-                if (moveCount == 1 || moveCount == 2)
-                {
-                    moveObject.position += player.transform.forward * Time.deltaTime * speed;
-                    isMove = true;
-                }
-            }
-        }  
+        // カメラの垂直移動（※角度制限なし、必要が無ければコメントアウト）
+        transform.RotateAround(targetPos, transform.right, mouseInputY);
     }
 }
