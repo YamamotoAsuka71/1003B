@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyPool : MonoBehaviour
 {
     [SerializeField]
+    Transform player;
+    [SerializeField]
     GameObject short_renge_enemy;
     [SerializeField]
     GameObject long_renge_enemy;
@@ -16,18 +18,25 @@ public class EnemyPool : MonoBehaviour
 
     List<GameObject> enemy_pool = null;
 
-    // Start is called before the first frame update
-    void Start()
+    int wave1_enemy_value = 10;
+
+    void Awake()
     {
         enemy_pool = new List<GameObject>(POOL_LIMIT_NUM);
 
-        for (int i = 0; i < POOL_LIMIT_NUM; i++) 
+        for (int i = 0; i < POOL_LIMIT_NUM; i++)
         {
             GameObject enemy = null;
 
+            int pos_x = Random.Range(50, 100);
+            int pos_y = Random.Range(50, 100);
+            int pos_z = Random.Range(50, 100);
+
+            Vector3 dif = new Vector3(pos_x, pos_y, pos_z);
+
             if (i < POOL_LIMIT_NUM / 2)
             {
-                enemy = Instantiate(short_renge_enemy);
+                enemy = Instantiate(short_renge_enemy, player.position + dif, Quaternion.identity);
                 enemy.name = short_renge_enemy.name;
             }
             else
@@ -36,14 +45,28 @@ public class EnemyPool : MonoBehaviour
                 enemy.name = long_renge_enemy.name;
             }
 
-            enemy.transform.parent = transform;
+            if (enemy != null)
+            {
+                enemy.transform.parent = transform;
 
-            enemy.SetActive(false);
+                enemy.SetActive(false);
 
-            enemy_pool.Add(enemy);
+                enemy_pool.Add(enemy);
+            }
+            else
+            {
+                Debug.Log("Enemy = null");
+            }
         }
+    }
 
-        
+    // Start is called before the first frame update
+    void Start()
+    {
+        for (int i = 0; i < wave1_enemy_value; i++)
+        {
+            CreateEnemy(true, false);
+        }
     }
 
     // Update is called once per frame
