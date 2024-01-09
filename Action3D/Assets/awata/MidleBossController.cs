@@ -72,8 +72,8 @@ public class MidleBossController : MonoBehaviour
 
     void Attack()
     {
-        material.color = Color.yellow;
-        //animator.SetTrigger("isAttack");
+        //material.color = Color.yellow;
+        animator.SetTrigger("isAttack");
     }
 
     void DebugMove()
@@ -104,14 +104,12 @@ public class MidleBossController : MonoBehaviour
 
             if (rigidbody != null)
             {
-                rigidbody.AddForce(transform.forward * 10);
+                rigidbody.AddForce(transform.forward * 1000);
             }
             else
             {
                 Debug.Log("a");
             }
-
-            //other.GetComponent<Rigidbody>().AddForce(transform.forward * 2.0f); ;
         }
     }
 }
