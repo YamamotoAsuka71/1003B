@@ -490,6 +490,51 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8272254356774644430, guid: b2695525c61b9c341b29bbdb8dfa9edc, type: 3}
   m_PrefabInstance: {fileID: 2183476883855395294}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1254193620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1254193622}
+  - component: {fileID: 1254193621}
+  m_Layer: 0
+  m_Name: CameraPosition
+  m_TagString: CameraPos
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1254193621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254193620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8160d16931edeaa4e93b782297f076e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1479119937922753690}
+--- !u!4 &1254193622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254193620}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1552522003
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,7 +547,7 @@ GameObject:
   - component: {fileID: 1552522004}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -519,7 +564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8160d16931edeaa4e93b782297f076e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObj: {fileID: 1479119937922753690}
+  player: {fileID: 1479119937922753690}
 --- !u!4 &1552522005
 Transform:
   m_ObjectHideFlags: 0
@@ -599,7 +644,7 @@ PrefabInstance:
     - target: {fileID: 8100734498363778400, guid: f3c4fe4833f7bcb478d9a9435533dfb3, type: 3}
       propertyPath: camera
       value: 
-      objectReference: {fileID: 359153798}
+      objectReference: {fileID: 1254193620}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

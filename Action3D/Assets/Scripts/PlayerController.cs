@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -68,57 +69,58 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Transform cameraTransform = camera.transform;
-            cameraTransform.localPosition = new Vector3(cameraTransform.localPosition.x, 0.0f, cameraTransform.localPosition.z);
-            Vector3 forward = cameraTransform.forward;
-            forward.x = 0.0f;
-            forward.y = 0.0f;
-            forward = new Vector3(forward.x, forward.y, forward.z);
-            Vector3 right = cameraTransform.right;
-            right.y = 0.0f;
-            right.z = 0.0f;
-            right = new Vector3(right.x, right.y, right.z);
+            //Transform cameraTransform = camera.transform;
+            //cameraTransform.localPosition = new Vector3(cameraTransform.localPosition.x, 0.0f, cameraTransform.localPosition.z);
+            //Vector3 forward = cameraTransform.forward;
+            //forward.x = 0.0f;
+            //forward.y = 0.0f;
+            //forward = new Vector3(forward.x, forward.y, forward.z);
+            //Vector3 right = cameraTransform.right;
+            //right.y = 0.0f;
+            //right.z = 0.0f;
+            //right = new Vector3(right.x, right.y, right.z);
             collision.SetActive(false);
             animator.SetBool("isAttack", false);
+            Transform cameraTransform = camera.transform;
             //  Aが押されたら
             if (Input.GetKey(KeyCode.A))
             {
                 //  子のオブジェクトから見て右に移動
-                transform.position -= right * Time.deltaTime * speed;
+                transform.position -= camera.transform.right * Time.deltaTime * speed;
                 isMove = true;
             }
             //  Dが押されたら
             if (Input.GetKey(KeyCode.D))
             {
                 //  子のオブジェクトから見て左に移動
-                transform.position += right * Time.deltaTime * speed;
+                transform.position += camera.transform.right * Time.deltaTime * speed;
                 isMove = true;
             }
             //  Wが押されたら
             if (Input.GetKey(KeyCode.W))
             {
                 //  子のオブジェクトから見て奥に移動
-                transform.position += forward * Time.deltaTime * speed;
+                transform.position += camera.transform.forward * Time.deltaTime * speed;
                 isMove = true;
             }
             //  Sが押されたら
             if (Input.GetKey(KeyCode.S))
             {
                 //  子のオブジェクトから見て手前に移動
-                transform.position -= forward * Time.deltaTime * speed;
+                transform.position -= camera.transform.forward * Time.deltaTime * speed;
                 isMove = true;
             }
             //  左のシフトキーが押されたら
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 //  子のオブジェクトから見て下に移動
-                transform.position -= camera.transform.up * Time.deltaTime;
+                transform.position -= transform.up * Time.deltaTime;
             }
             //  スペースキーが押されたら
             if (Input.GetKey(KeyCode.Space))
             {
                 //  子のオブジェクトから見て上に移動
-                transform.position += camera.transform.up * Time.deltaTime;
+                transform.position += transform.up * Time.deltaTime;
             }
 
             if (Input.GetMouseButton(1))
