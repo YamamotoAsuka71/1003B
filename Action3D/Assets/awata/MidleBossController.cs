@@ -17,7 +17,6 @@ public class MidleBossController : MonoBehaviour
     [SerializeField]
     const float COOL_TIME = 5.0f;
     Animator animator;
-    Material material;
 
     int Hp = 500;
     int stg = 40;
@@ -30,14 +29,12 @@ public class MidleBossController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        material = gameObject.GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-        DebugMove();
     }
 
     void Movement()
@@ -64,7 +61,7 @@ public class MidleBossController : MonoBehaviour
         }
         if (timer > 1.0f)
         {
-            material.color = Color.white;
+            
         }
 
         //animator.SetFloat("Speed", speed);
@@ -72,28 +69,7 @@ public class MidleBossController : MonoBehaviour
 
     void Attack()
     {
-        //material.color = Color.yellow;
         animator.SetTrigger("isAttack");
-    }
-
-    void DebugMove()
-    {
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.Translate(transform.up);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.Translate(-transform.up);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Translate(-transform.right);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Translate(transform.right);
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -106,10 +82,7 @@ public class MidleBossController : MonoBehaviour
             {
                 rigidbody.AddForce(transform.forward * 1000);
             }
-            else
-            {
-                Debug.Log("a");
-            }
         }
+
     }
 }
