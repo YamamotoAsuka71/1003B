@@ -520,6 +520,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1479119937922753690}
+  MinAngleX: 0
+  MaxAngleX: 0
 --- !u!4 &1254193622
 Transform:
   m_ObjectHideFlags: 0
@@ -565,6 +567,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1479119937922753690}
+  MinAngleX: -25
+  MaxAngleX: 25
 --- !u!4 &1552522005
 Transform:
   m_ObjectHideFlags: 0
