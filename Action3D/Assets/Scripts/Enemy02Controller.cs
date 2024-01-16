@@ -8,34 +8,33 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyController : MonoBehaviour
 {
     public Transform player;
-    public float detectionRange = 10f;
-    public float attackRange = 5f;
-    public float moveSpeed = 2f;
+    public float detectionRange = 10.0f;
+    public float attackRange = 5.0f;
+    public float moveSpeed = 2.0f;
     public GameObject shellPrefab;
     private int count;
-
 
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-       
-        
             // プレイヤーの方向に向き続ける
             LookAtPlayer();
 
             if (distanceToPlayer > attackRange)
             {
                 // プレイヤーに近づく
-                MoveTowardsPlayer();
+                MoveTowardsPlayer();           
             }
             else
             {
                 // プレイヤーが攻撃範囲内にいる場合は移動を止め、攻撃を行う
-                StopMoving();
                 Attack();
             }
-        
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        Attack();
     }
 
     void LookAtPlayer()
@@ -48,12 +47,6 @@ public class EnemyController : MonoBehaviour
     {
         // プレイヤーに向かって移動する
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-    }
-
-    void StopMoving()
-    {
-        // 移動を止める
-        // ここに移動を止める処理を追加
     }
 
     void Attack()
