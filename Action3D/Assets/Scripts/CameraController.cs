@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
         {
             if (Mathf.Abs(my) > 0.001f)
             {
-                transform.RotateAround(player.transform.position, transform.right, my);
+                transform.RotateAround(player.transform.position, -transform.right, my);
             }
             float currentXAngle = transform.eulerAngles.x;
             // Œ»İ‚ÌŠp“x‚ª180‚æ‚è‘å‚«‚¢ê‡
